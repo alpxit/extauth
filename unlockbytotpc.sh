@@ -69,7 +69,7 @@ while [ true ]; do
     while read -sr keycode; do
       ENTEREDTOTP=`echo "$ENTEREDTOTP${keycode:5:1}" | tail -c+2`
       NEEDTOTP=`keyctl pipe $TOTPKEYID | oathtool -s 30 -d 6 -b --totp -`
-      if [ "$PREVTOTPC" !== "$NEEDTOTP" ]; then
+      if [ "$PREVTOTPC" != "$NEEDTOTP" ]; then
         PREVTOTPC=$NEEDTOTP
       fi
       ISLOCKED=`loginctl show-session $SESSIONID | grep LockedHint=yes`

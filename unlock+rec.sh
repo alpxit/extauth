@@ -34,6 +34,27 @@ loginctl lock-session $SESSID
 
 sleep 1
 
+PREVTOTPC="******"
+
+(ENTEREDTOTP="******"
+ showmethekey-cli | \
+ grep --line-buffered PRESSED | \
+ awk '{print $8; fflush(stdout)}' | \
+ while read -sr keycode; do
+   ENTEREDTOTP=`echo "$ENTEREDTOTP${keycode:5:1}" | tail -c+2`
+   NEEDTOTP=`keyctl pipe $TOTPKEYID | oathtool -s 30 -d 6 -b --totp -`
+   if [ "$PREVTOTPC" != "$NEEDTOTP" ]; then
+     PREVTOTPC=$NEEDTOTP
+   fi
+   ISLOCKED=`loginctl show-session $SESSID | grep LockedHint=yes`
+   TS=`date +%Y%m%d_%H%M%S`
+   echo "$TS: [TOTP: $NEEDTOTP] {$ENTEREDTOTP}" >>$LOGPATH
+   if [ "$ENTEREDTOTP" == "$NEEDTOTP" -o "$ENTEREDTOTP" == "$PREVTOTPC" -o -z $ISLOCKED ]; then
+     qrencode -m 2 -t PNG -o "$QRCODEPATH" "$NEEDTOTP"
+     ffplay -autoexit -nodisp -hide_banner "/usr/share/sounds/sound-icons/glass-water-1.wav" 2>/dev/null &
+   fi
+ done)&
+
 
 while true
 do
@@ -47,26 +68,29 @@ do
     continue
   fi
 
+  ffplay -autoexit -nodisp -hide_banner "/usr/share/sounds/sound-icons/pisk-down.wav" 2>/dev/null &
   TS=`date`
 #  echo "$TS Wait until the file received..." >> $LOGPATH
 
   UNLOCKKEY=`zbarimg -q --raw $QRCODEPATH`
   rm -f $QRCODEPATH
+  echo "$TS $UNLOCKKEY" >> $LOGPATH
 
   if [ ! -z "$UNLOCKKEY" ]; then
     THEKEY=`keyctl pipe $TOTPKEYID | oathtool -s 30 -d 6 -b --totp -`
     echo "keys need/recieved: $THEKEY==$UNLOCKKEY" >> $LOGPATH
-#    ffplay -autoexit -nodisp -hide_banner "/usr/share/sounds/sound-icons/glass-water-1.wav" 2>/dev/null &
     if [ "$THEKEY" == "$UNLOCKKEY" ]; then
       echo "unlock sessionid $SESSID" >> $LOGPATH
 #      kill -SIGQUIT $ffpid
       loginctl unlock-session $SESSID
       sleep 2
       kill -9  $ffpid $ffpid1   # workaround to prevent sustem UI frizing
-#      ffplay -autoexit -nodisp -hide_banner "/usr/share/sounds/sound-icons/glass-water-1.wav" 2>/dev/null &
+      killall -9 showmethekey-cli
+      ffplay -autoexit -nodisp -hide_banner "/usr/share/sounds/sound-icons/electric-piano-3.wav" 2>/dev/null &
       exit
     else
       echo "Oops codes does not match... [$THEKEY] $UNLOCKKEY" >> $LOGPATH
+      ffplay -autoexit -nodisp -hide_banner "/usr/share/sounds/sound-icons/cockchafer-gentleman-1.wav" 2>/dev/null &
     fi
   fi
 
