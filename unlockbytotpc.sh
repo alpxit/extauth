@@ -4,7 +4,7 @@
 
 LOGPATH=/tmp/watchtotp.log
 UN=$(whoami)
-SESSIONID=`loginctl list-sessions | grep $UN | awk '{print $1}'`
+SESSIONID=`loginctl list-sessions | grep $UN | grep user | awk '{print $1}'`
 TOTPKEYID=$(keyctl show | grep TOTPKEY | awk '{print $1}')
 ENTEREDTOTP="******"
 
@@ -15,10 +15,16 @@ echo "$TS: TOTPKEYID: $TOTPKEYID" >>$LOGPATH
 # If the system time is incorrect when booting, it must be synchronized with the correct time,
 # otherwise it will be impossible to unlock the computer.
 while true; do
-  sudo /usr/sbin/ntpdate -d pool.ntp.org >>$LOGPATH
-  if [ $? -eq 0 ]; then
+  ISTIMESYNCED=$(timedatectl status | egrep "synchronized:.*yes")
+  if [ -n "$ISTIMESYNCED" ]; then
     break
   fi
+#  systemctl restart systemd-timesyncd
+# do not working for ubuntu 26:
+#  sudo /usr/sbin/ntpdate -d pool.ntp.org >>$LOGPATH
+#  if [ $? -eq 0 ]; then
+#    break
+#  fi
   ffplay -autoexit -nodisp -hide_banner "/usr/share/sounds/sound-icons/glass-water-1.wav" 2>/dev/null &
   sleep 1
 done
@@ -26,6 +32,7 @@ done
 TS=`date +%Y%m%d_%H%M%S`
 echo "$TS: just synced time" >>$LOGPATH
 
+exit
 
 loginctl lock-session $SESSIONID
 

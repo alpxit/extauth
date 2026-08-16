@@ -31,6 +31,8 @@ function prepareControls() {
   let cardArea = $('#cardArea');
   let labelOTPcode = $('#labelOTPcode');
   let inpCurrentPassword = $('#inpCurrentPassword');
+  let btnCopyFromClipboard = $('#btnCopyFromClipboard');
+  let btnCopyToClipboard = $('#btnCopyToClipboard');
   let inpNewPassword = $('#inpNewPassword');
   let btnClearKeyDestination = $('#btnClearKeyDestination');
   let btnSaveNewPassword = $('#btnSaveNewPassword');
@@ -452,6 +454,16 @@ function prepareControls() {
   inpCurrentPassword.change(function () {
     if (inpCurrentPassword.val().length > 5) {
     }
+  });
+  inpCurrentPassword.focus(function () {
+    btnCopyFromClipboard.removeClass('d-none');
+    btnCopyToClipboard.removeClass('d-none');
+  });
+  inpCurrentPassword.blur(function () {
+    setTimeout(function () {
+      btnCopyFromClipboard.addClass('d-none');
+      btnCopyToClipboard.addClass('d-none');
+    }, 250);
   });
 
   let elQrCodeVideo = document.getElementById('qrCodeScannerVideo');

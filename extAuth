@@ -167,9 +167,6 @@ done
 FIFOPID=$!
 fi
 
-zbarcam -q --nodisplay --nodbus --raw -Sdisable -Sqrcode.enable >$zbarfifo 2>$TTY &
-ZBARPID=$!
-
 BASE62="0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
 TIMEOUT=62
 (while [ -e $httpfifo -a $TIMEOUT -gt 0 ]>$NUL; do
@@ -205,6 +202,9 @@ if [ -z "$ISVIDEODEV" ]; then
     terminate 2>$NUL 1>$NUL
     exit 1
   fi
+else
+  zbarcam -q --nodisplay --nodbus --raw -Sdisable -Sqrcode.enable >$zbarfifo 2>$TTY &
+  ZBARPID=$!
 fi
 LEN=0
 CNTR=""

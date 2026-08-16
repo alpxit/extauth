@@ -30,7 +30,7 @@
     .text-success-highlight {color: #00ff00;}
     .card label {font-size: 0.6em !important;}
     .input-group {height: 1.42em !important; width: auto !important;}
-    .input-group input {height: 1.97em !important; font-size: 0.7em !important; padding: 0 0.4em !important;}
+    .input-group input {height: 1.97em !important; font-size: 0.7em !important; padding: 0 0.4em !important; border-color: #6c757d;}
     .input-group button {height: 1.58em !important; line-height: 0; padding: 0.1em 0.4em !important;}
     .form-range {height: 1em !important;}
     .d-flex button { /* settings +/- btns */
@@ -66,7 +66,7 @@
       left: 0.5em;
       z-index: 100;
       background-color: black !important;
-      box-shadow: 0 0 1em 0.5em black;
+      box-shadow: 0 0 1em 0.3em black;
     }
     #btnUsbModemSettings {
       text-decoration: none;
@@ -138,6 +138,12 @@
     @media (hover: hover) { /*desktop*/
       #btnRevertPreviousPassword span {top: 0.65em !important;}
       #btnUpdateVersion {line-height: 0.3em; padding-top: 0.45em}
+    }
+    #inpCurrentPassword {
+      border-left-width: 0;
+    }
+    #inpCurrentPassword:focus {
+      border-left-width: 1px !important;
     }
   </style>
   <script>
@@ -212,13 +218,14 @@
       </label>
       <br>
       <div class="input-group input-group-sm float-start me-0 pe-0" style="width: 15.8em !important;">
-        <button class="btn btn-outline-secondary" id="btnCopyFromClipboard" style="padding: 0.1em 0.2em 0.1em 0.3em !important;">
-          &#128203;<span class="text-warning" style="position: absolute; left: 1em;">&#10148;</span>
+        <button class="btn btn-outline-secondary" id="btnForLeftGrid" style="border-right: none; padding: 0.1em 0.15em !important;"></button>
+        <button class="btn btn-outline-secondary d-none" id="btnCopyFromClipboard" style="padding: 0.1em 0.2em 0.1em 0 !important; border-left: none;">
+          &#128203;<span class="text-warning" style="position: absolute; left: 0.9em;">&#10148;</span>&nbsp;&nbsp;
         </button>
         <input id="inpCurrentPassword" type="password" class="form-control" name="password" autocomplete="current-password"
                placeholder="Enter key or insert it from clipboard (left button)"/>
-        <button class="btn btn-outline-secondary" id="btnCopyToClipboard" style="padding: 0.1em 0.2em 0.1em 0.2em !important;">
-          <span class="text-danger" style="position: absolute; left: -0.2em;">&#10148;</span>&#128203;
+        <button class="btn btn-outline-secondary d-none" id="btnCopyToClipboard" style="padding: 0.1em 0.2em 0.1em 0.5em !important;">
+          <span class="text-danger" style="position: absolute; left: -0.1em;">&#10148;</span>&#128203;
         </button>
         <button class="btn btn-outline-secondary text-success-highlight bg-black d-none" id="labelOTPcode" data-bs-target="#inpCurrentPassword"></button>
         <button class="btn btn-outline-secondary d-none" id="btnClearPassword">&#10060;</button>
