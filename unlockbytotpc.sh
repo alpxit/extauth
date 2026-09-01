@@ -65,7 +65,7 @@ while [ true ]; do
 
     showmethekey-cli | \
     grep --line-buffered PRESSED | \
-    awk -W interactive '{print $8; fflush(stdout)}' | \
+    awk '{print $8; fflush(stdout)}' | \
     while read -sr keycode; do
       ENTEREDTOTP=`echo "$ENTEREDTOTP${keycode:5:1}" | tail -c+2`
       NEEDTOTP=`keyctl pipe $TOTPKEYID | oathtool -s 30 -d 6 -b --totp -`

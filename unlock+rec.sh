@@ -4,7 +4,7 @@ TS=`date`
 IMGFMT=pgm
 QRCODEPATH=/tmp/qrcode.$IMGFMT
 LOGPATH=/tmp/unlockByQrCode.log
-LOGPATH="/dev/tty"
+#LOGPATH="/dev/tty"
 SESSID=`loginctl list-sessions | grep $(whoami) | grep user | awk '{print $1}'`
 TOTPKEYID=$(keyctl show | grep TOTPKEY | awk '{print $1}')
 if [ -z $TOTPKEYID ]; then
@@ -20,7 +20,7 @@ ffmpeg -loglevel quiet -hide_banner -y \
  -f v4l2 -i /dev/video0 \
  -f alsa -sample_rate 44100 -i hw:CARD=PCH,DEV=0 \
  -map 0:v -map 1:a -f segment -strftime 1 -segment_time 43200 -strict experimental \
- -segment_format mpegts -fflags +genpts+igndts -muxdelay 0.1 -ac 1 -c:a aac -b:a 256k -c:v libx264 -crf 26 -preset veryfast -tune zerolatency -bf 0 -flush_packets 1 \
+ -segment_format mpegts -fflags +genpts+igndts -muxdelay 0.1 -ac 1 -c:a aac -b:a 256k -vf "hqdn3d" -c:v libx264 -crf 26 -preset ultrafast -tune zerolatency -bf 0 -flush_packets 1 \
  /mnt/hdd/data/camcap_%Y-%m-%d_%H-%M-%S.ts \
  -map 0:v -vf "fps=2,format=gray" -c:v $IMGFMT -f image2pipe - | \
 ffmpeg -loglevel quiet -hide_banner -y \
@@ -36,6 +36,8 @@ sleep 1
 
 PREVTOTPC="******"
 
+ISUNLOCKBYKBDACTIVE=`ps -Af | grep  showmethekey-cli | grep -v grep`
+if [ -z "$ISUNLOCKBYKBDACTIVE" ]; then
 (ENTEREDTOTP="******"
  showmethekey-cli | \
  grep --line-buffered PRESSED | \
@@ -54,7 +56,7 @@ PREVTOTPC="******"
      ffplay -autoexit -nodisp -hide_banner "/usr/share/sounds/sound-icons/glass-water-1.wav" 2>/dev/null &
    fi
  done)&
-
+fi
 
 while true
 do
@@ -85,7 +87,9 @@ do
       loginctl unlock-session $SESSID
       sleep 2
       kill -9  $ffpid $ffpid1   # workaround to prevent sustem UI frizing
-      killall -9 showmethekey-cli
+      if [ -z "$ISUNLOCKBYKBDACTIVE" ]; then
+        killall -9 showmethekey-cli
+      fi
       ffplay -autoexit -nodisp -hide_banner "/usr/share/sounds/sound-icons/electric-piano-3.wav" 2>/dev/null &
       exit
     else
