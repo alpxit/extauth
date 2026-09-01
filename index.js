@@ -988,6 +988,7 @@ function prepareControls() {
             let vers = data.replace(/\n/g,'').replace(/^.*CACHE_NAME = '/,'').replace(/'.*/g,'');
             if (vers !== cacheNames[0]) {
               labelVersion.addClass('text-warning');
+              labelVersion.css('font-size', '0.8em');
               btnUpdateVersion.removeClass('d-none');
               btnUpdateVersion.click(function () {
                 caches.delete(cacheNames);
