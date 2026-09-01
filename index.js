@@ -189,6 +189,13 @@ function prepareControls() {
     setTimeout(function () {
       btnShowQrCode.find('svg').attr('fill', colorHighlightSuccess);
     },250);
+    if (!$(qrCodeArea).hasClass('d-none')) { // if TOTP qrcode is showed
+      $(qrCodeArea).click();
+      setTimeout(function () {
+        //btnShowQrCode.click();
+        btnShowAction();
+      },500);
+    }
   }
   selHSD.find('a').click(passwordsFromSource);
   setTimeout(function () {
