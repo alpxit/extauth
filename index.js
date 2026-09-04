@@ -103,7 +103,7 @@ function prepareControls() {
 
   function fillPasswordInputs(hsd) {
     inpCurrentPassword.val(hsd['currentKey'] ? hsd['currentKey'] : '');
-    btnRevertPreviousPassword[hsd['previousKey'] && hsd['previousKey'] !== hsd['currentKey'] ? 'addClass' : 'removeClass']('d-none');
+    btnRevertPreviousPassword[hsd['previousKey'] && hsd['previousKey'] !== hsd['currentKey'] ? 'removeClass' : 'addClass']('d-none');
     inpNewPassword.val(hsd['applyNewKey'] ? hsd['applyNewKey'] : '');
     btnSaveNewPassword[hsd['applyNewKey'] ? 'addClass' : 'removeClass']('bg-danger');
     btnSaveNewPassword[!hsd['applyNewKey'] ? 'addClass' : 'removeClass']('d-none');
