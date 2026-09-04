@@ -448,8 +448,19 @@ function prepareControls() {
     btnClearPassword[doShowPrevPass ? 'removeClass' : 'addClass']('d-none');
     btnRevertPreviousPassword.find('span').html(doShowPrevPass ? '&#8635;' : '&#8634;'); // 11118/8635 | 11119/8634
   });
+  let lbl3ClickDeletePrevPassword = $('#lbl3ClickDeletePrevPassword');
   btnClearPassword.click(function () {
     event.preventDefault();
+    lbl3ClickDeletePrevPassword.html('click '+(3-(--tripleClick)).toString()+'/3');
+    if (tripleClick > 0) {
+      lbl3ClickDeletePrevPassword.removeClass('d-none');
+      if (tripleClickTimer) clearTimeout(tripleClickTimer);
+      tripleClickTimer = setTimeout(function () {
+        lbl3ClickDeletePrevPassword.addClass('d-none');
+        tripleClick = 3;
+      }, 2000);
+      return false;
+    }
     inpCurrentPassword.val(selectedHSD.currentKey);
     inpCurrentPassword.removeClass('text-danger');
     btnClearPassword.addClass('d-none');

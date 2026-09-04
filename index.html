@@ -134,6 +134,15 @@
       line-height: 1.1em;
       text-align: right;
     }
+    #lbl3ClickDeleteNewPassword, #lbl3ClickDeletePrevPassword {
+      position: relative;
+      color: red;
+      font-size: small;
+      margin-left: 1em;
+      top: -0.2em;
+      background-color: black !important;
+      box-shadow: 0 0 1em 0.5em black;
+    }
     @media (hover: hover) { /*desktop*/
       #btnRevertPreviousPassword span {top: 0.65em !important;}
       #btnUpdateVersion {line-height: 0.3em; padding-top: 0.45em}
@@ -216,6 +225,7 @@
       <label for="inpCurrentPassword" class="form-label m-0 p-0">
         The current passkey for the destination
       </label>
+      <span id="lbl3ClickDeletePrevPassword" class="d-none">click 1/3</span>
       <br>
       <div class="input-group input-group-sm float-start me-0 pe-0" style="width: 15.8em !important;">
         <button class="btn btn-outline-secondary" id="btnForLeftGrid" style="border-right: none; padding: 0.1em 0.15em !important;"></button>
@@ -247,7 +257,7 @@
         Update the passkey to a new if need <i id="lblNewPasswordsLength"></i>
         <br>
       </label>
-      <span id="lbl3ClickDeleteNewPassword" class="float-end me-4 d-none" style="font-size: small; color: red;">click 1/3</span>
+      <span id="lbl3ClickDeleteNewPassword" class="d-none">click 1/3</span>
       <div class="input-group input-group-sm">
         <button class="btn btn-outline-secondary" id="btnAutoGenerateNewPassword"><span>&check;</span></button>
         <button class="btn btn-outline-secondary" id="btnGenerateNewPassword">&#127922;</button>
