@@ -28,8 +28,8 @@
     }
     .bg-success-highlight {background-color: rgb(0, 255, 0, 0.35);}
     .text-success-highlight {color: #00ff00;}
-    .card label {font-size: 0.6em !important; position: relative; top: -2px !important}
-    .input-group {height: 1.42em !important; width: auto !important; margin-top: -5px !important;}
+    .card label {font-size: 0.6em !important; position: relative; top: -0.3em !important}
+    .input-group {height: 1.42em !important; width: auto !important; margin-top: -0.4em !important;}
     .input-group input {height: 1.97em !important; font-size: 0.7em !important; padding: 0 0.4em !important; border-color: #6c757d;}
     .input-group button {height: 1.58em !important; line-height: 0; padding: 0.1em 0.4em !important;}
     .form-range {height: 1em !important;}
@@ -103,18 +103,19 @@
       padding-left: 0.1em;
     }
     #btnSettings {
-      font-family: android emoji, apple color emoji, segoe ui emoji, notocoloremoji, segoe ui symbol, emojisymbols, emojione mozilla;
-      font-size: 1.2em;
-      height: 1.2em;
-      padding: 0.1em !important;
+      font-size: 1.1em;
+      height: 1.4em;
+      padding: 0.2em 0.1em !important;
       float: right;
       position: relative;
-      top: 0.1em;
+      top: -0.1em !important;
     }
     #btnSettings span {
       display: inline-block;
       position: relative;
       top: -0.25em;
+      filter: grayscale(100%);
+      opacity: 0.7;
     }
     #qrCodeImgArea {
       padding-left: 20px;
@@ -194,7 +195,7 @@
 
   <form action="#" method="post">
   <div id="cardArea" class="card">
-    <div class="card-body m-0 p-0 ms-2 me-2 mb-1">
+    <div class="card-body m-0 p-0 ms-2 me-2">
       <button id="btnScanSessionPubkey" type="button" class="btn btn-outline bg-dark p-0 m-0">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi float-start" viewBox="0 0 16 16">
           <path d="M0 .5A.5.5 0 0 1 .5 0h3a.5.5 0 0 1 0 1H1v2.5a.5.5 0 0 1-1 0zm12 0a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-1 0V1h-2.5a.5.5 0 0 1-.5-.5M.5 12a.5.5 0 0 1 .5.5V15h2.5a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5v-3a.5.5 0 0 1 .5-.5m15 0a.5.5 0 0 1 .5.5v3a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1 0-1H15v-2.5a.5.5 0 0 1 .5-.5M4 4h1v1H4z"/>
@@ -204,13 +205,13 @@
           <path d="M12 9h2V8h-2z"/>
         </svg>
       </button>
-      <span class="m-0 p-dst" style="z-index: -1; margin-right: -0.1em !important;"></span>
+      <span class="m-0 p-dst" style="z-index: -1; margin-right: 0 !important;"></span>
       <label for="inpKeyDestination" class="form-label m-0 p-0">
         &nbsp;Destination (obtain from a scanned QR code)
       </label>
       <span id="lbl3ClickDeleteDestination" class="float-end d-none" style="font-size: small; color: red;">click 1/3</span>
       <br>
-      <div class="input-group input-group-sm ms-5" role="group" style="left: -0.4em; margin-right: -0.4em;">
+      <div class="input-group input-group-sm ms-5" role="group" style="left: -0.3em; margin-right: -0.3em;">
         <input id="inpKeyDestination" type="text" class="form-control pe-0" name="username" autocomplete="username"
                placeholder="hostName/serviceName/destinationName">
         <button class="btn btn-outline-secondary d-none" id="btnClearKeyDestination">&#10060;</button>
