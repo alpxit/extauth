@@ -154,6 +154,24 @@
     #inpCurrentPassword:focus {
       border-left-width: 1px !important;
     }
+    .carousel-control-next, .carousel-control-prev {
+      background-color: lightgreen !important;
+      box-shadow: 0 0 1em 0.2em white;
+    }
+    .carousel-control-prev-icon, .carousel-control-next-icon {
+      width: 2em;
+      height: 1.6em;
+    }
+    .accordion-item {
+      border: 0 !important;
+    }
+    .accordion-button {
+      font-size: small;
+      padding: 0.6em 0.4em 0 0.6em !important;
+    }
+    .accordion-body {
+      padding: 1em !important;
+    }
   </style>
   <script>
     if ('serviceWorker' in navigator) {
@@ -282,17 +300,269 @@
   </form>
 
   <div id="whatTheArea" class="d-none mt-1">
-    <div class="card">
-      <div class="card-body m-0 p-2 pt-1" style="font-size: 0.7em">
-        Brief description.<br>
-        This interface is designed to support scripts with a secure key (passphrase) transfer protocol using QR codes.<br>
-        <br>
-        Key transfer interaction flowchart.<br>
-        1. The destination device must generate a QR code containing the public encryption key and some metadata.<br>
-        2. Run and scan this QR code. Once you receive the destination path, enter the current authorization key/passphrase. You can also set or generate a new password using the button to change the current one.<br>
-        3. Clicking the "Show QR code" button will generate a series of sequential QR codes, which must be shown to the active camera of the destination device.<br>
-        <br>
-        Data exchange via QR codes is encrypted with a cryptographically strong algorithm. Details and source code can be found on the project page.
+    <div id="infoCarousel" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <div class="card">
+            <div class="card-body m-0 p-2 pt-1" style="font-size: 0.7em">
+              <h6 class="accordion-button text-light" style="padding-left: 0 !important;">
+                External Authentication System
+              </h6>
+              <hr class="m-0 p-0 mt-2 mb-2">
+
+              <p class="mb-2 fw-bold text-success" style="font-size: 1.15em;">
+                Keyboardless Security Infrastructure
+              </p>
+
+              This system provides secure, hardware-isolated terminal and partition authorization via mobile PWA, eliminating manual passphrase entry.<br>
+
+              <div class="mt-3 bg-dark p-2 rounded border border-secondary">
+                <span class="text-warning fw-bold d-block mb-1">🔑 Supported Core Integrations:</span>
+                <ul class="list-unstyled m-0 ps-1 text-secondary" style="line-height: 1.5;">
+                  <li>• <strong class="text-light">LUKS & Crypttab</strong> — Pre-boot full disk decryption</li>
+                  <li>• <strong class="text-light">Terminal / Sudo</strong> — Privilege escalation in OS</li>
+                  <li>• <strong class="text-light">User Auth</strong> — Lock screen and session management</li>
+                </ul>
+              </div>
+
+              <div class="mt-2 bg-dark p-2 rounded border border-secondary">
+                <span class="text-warning fw-bold d-block mb-1">📡 Air-Gapped & Wired Channels:</span>
+                <div class="text-secondary" style="line-height: 1.4;">
+                  Primary authentication runs via dynamic <strong class="text-light">QR codes</strong>. Backup channels support secure <strong class="text-light">USB PTP-mode</strong> file exchange and acoustic <strong class="text-light">Audio-modem</strong> trills.
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card">
+            <div class="card-body m-0 p-2 pt-1" style="font-size: 0.7em">
+              <h6 class="accordion-button text-light" style="padding-left: 0 !important;">
+                Data Exchange via QR Codes
+              </h6>
+              <hr class="m-0 p-0 mt-2 mb-2">
+              This is the primary mode designed for secure passphrase transfer between isolated devices using dynamic QR codes.<br>
+              <small>Follow steps below (expand item for details):</small><br>
+              <div class="accordion accordion-flush" id="accordionQrMode">
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#qr-collapseOne" aria-expanded="false" aria-controls="qr-collapseOne">
+                      1. Run or continue the Script on the PC
+                    </button>
+                  </h6>
+                  <div id="qr-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionQrMode">
+                    <div class="accordion-body">
+                      * Run the extAuth console script (or press enter in booting LUKS one) on the destination computer.<br>
+                      * The PC monitor will display a QR code containing the session public key and metadata.<br>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#qr-collapseTwo" aria-expanded="false" aria-controls="qr-collapseTwo">
+                      2. Scan QR and Enter your current Passkey
+                    </button>
+                  </h6>
+                  <div id="qr-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionQrMode">
+                    <div class="accordion-body">
+                      1. In this app, tap the &nbsp;<strong class="text-light">white "Scan" button</strong> and scan the QR code from the PC screen.<br>
+                      2. Once the destination is recognized, enter your current authorization key/passphrase.<br>
+                      * Tip: You can use the Dice button &#127922; to generate a secure new passkey if needed.<br>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#qr-collapseThree" aria-expanded="false" aria-controls="qr-collapseThree">
+                      3. Transmit Dynamic QR Response
+                    </button>
+                  </h6>
+                  <div id="qr-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionQrMode">
+                    <div class="accordion-body">
+                      * Compare the &nbsp;<span class="text-warning">yellow OTP code</span> on the computer screen with the code in this app.<br>
+                      1. Tap the <span class="text-warning"> yellow QR button </span>.<br>
+                      2. The app will generate an animated sequence of sequential QR code chunks.<br>
+                      3. Hold your smartphone screen up to the computer's active camera to read the sequence.<br>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#qr-collapseFour" aria-expanded="false" aria-controls="qr-collapseFour">
+                      * Cryptographic Security Notes
+                    </button>
+                  </h6>
+                  <div id="qr-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionQrMode">
+                    <div class="accordion-body">
+                      <strong class="text-info">* All data exchanged via QR codes is fully encrypted using a cryptographically strong algorithm.</strong><br>
+                      * Complete protocol details and full open-source code can be checked on the project <a target="_blank" href="https://github.com/extauth/extauth.github.io">GitHub page</a>.<br>
+                    </div>
+                  </div>
+                </div>
+                <br>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card">
+            <div class="card-body m-0 p-2 pt-1" style="font-size: 0.7em">
+              <h6 class="accordion-button text-light" style="padding-left: 0 !important;">
+                USB Data Exchange in PTP Mode
+              </h6>
+              <hr class="m-0 p-0 mt-2 mb-2">
+              This mode can be used in case of absence or problems with the device cameras.<br>
+              <small>Follow steps bellow (expand item for details):</small><br>
+              <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                      1. Connect the USB Cable and enable PTP
+                    </button>
+                  </h6>
+                  <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      1. Connect your smartphone to the computer using a USB cable.<br>
+                      2. Open the Android notification shade, tap "USB Charging", and select: "Image Transfer (PTP)".<br>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                      2. Run or continue the Script on the PC
+                    </button>
+                  </h6>
+                  <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      * Only AFTER enabling PTP mode on your phone, start (or resume) the extAuth script on the PC.<br>
+                      * The script will detect your phone and create a special file in your "Pictures" folder.<br>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse3" aria-expanded="false" aria-controls="flush-collapse3">
+                      3. Import the Public Key to the PWA
+                    </button>
+                  </h6>
+                  <div id="flush-collapse3" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      1. In this app, tap the white "Scan" button.<br>
+                      2. If a file selection window appears, go to the "Pictures" folder.<br>
+                      3. Select the file named: extAuth.txt.<br>
+                      (The app will read the metadata and the PC's public key).<br>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse4" aria-expanded="false" aria-controls="flush-collapse4">
+                      4. CRITICAL SECURITY OTP MATCH CHECK
+                    </button>
+                  </h6>
+                  <div id="flush-collapse4" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      * Compare the &nbsp;<span class="text-warning">yellow OTP code</span> on the computer screen with the code in this app.<br>
+                      <strong class="text-warning">* They MUST match exactly!</strong><br>
+                      * If the numbers are different, connection is unsafe. Close everything and start over.<br>
+                    </div>
+                  </div>
+                </div>
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse5" aria-expanded="false" aria-controls="flush-collapse5">
+                      5. Complete Authorization with &nbsp;<span class="text-warning">QR button</span>
+                    </button>
+                  </h6>
+                  <div id="flush-collapse5" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                    <div class="accordion-body">
+                      1. If the OTP codes match, tap the <span class="text-warning"> YELLOW </span> button with the QR code icon.<br>
+                      2. The app will encrypt your passkey and save it back to the same file.<br>
+                      3. The computer will detect data update, decrypt it, and log you in.<br>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-item">
+          <div class="card">
+            <div class="card-body m-0 p-2 pt-1" style="font-size: 0.7em">
+              <h6 class="accordion-button text-light text-opacity-50" style="padding-left: 0 !important;">
+                Data Exchange via Audio Channel
+              </h6>
+              <hr class="m-0 p-0 mt-2 mb-2">
+              For now, it’s just a teaser; the functionality is still under development :( <br><br>
+              This backup mode can be used in case of absence or optical problems with the device cameras.<br>
+              <small>Follow steps below (expand item for details):</small><br>
+
+              <div class="accordion accordion-flush" id="accordionAudioMode">
+
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#audio-collapseOne" aria-expanded="false" aria-controls="audio-collapseOne">
+                      1. Enable Audio Sync Mode
+                    </button>
+                  </h6>
+                  <div id="audio-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionAudioMode">
+                    <div class="accordion-body">
+                      1. Turn on the <span class="text-warning">AUDIO switch</span> in the PWA toggles line.<br>
+                      2. Tap the main white button to turn on the microphone and start listening to the air.<br>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#audio-collapseTwo" aria-expanded="false" aria-controls="audio-collapseTwo">
+                      2. Broadcast and Match
+                    </button>
+                  </h6>
+                  <div id="audio-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionAudioMode">
+                    <div class="accordion-body">
+                      * Put the smartphone microphone close to the PC speaker.<br>
+                      * The PC will broadcast an amplitude-modulated sound trill (2ms per bit).<br>
+                      * The app will automatically catch the preamble and calibrate the phase.<br>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="accordion-item">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#audio-collapseThree" aria-expanded="false" aria-controls="audio-collapseThree">
+                      3. Automatic Handshake Response
+                    </button>
+                  </h6>
+                  <div id="audio-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionAudioMode">
+                    <div class="accordion-body">
+                      1. Check that the yellow OTP codes match exactly on both screens.<br>
+                      2. The app will immediately broadcast the encrypted audio response back into the air.<br>
+                      3. The PC monitor will detect the answer and close the authorization process automatically.<br>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="position-absolute top-0 end-0 d-flex m-2" style="z-index: 10;">
+        <button class="carousel-control-prev position-static w-auto btn btn-sm btn-outline-light rounded-start me-1"
+                type="button" data-bs-target="#infoCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next position-static w-auto btn btn-sm btn-outline-light rounded-end"
+                type="button" data-bs-target="#infoCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
     </div>
   </div>
