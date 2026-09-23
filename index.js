@@ -29,6 +29,7 @@ function prepareControls() {
   let btnShowNewPassword = $('#btnShowNewPassword');
 
   let cardArea = $('#cardArea');
+  let areaScanButton = $('#areaScanButton');
   let labelOTPcode = $('#labelOTPcode');
   let inpCurrentPassword = $('#inpCurrentPassword');
   let btnCopyFromClipboard = $('#btnCopyFromClipboard');
@@ -380,6 +381,7 @@ function prepareControls() {
     labelOTPcode.addClass('d-none');
     $(qrCodeArea).html('');
     $(qrCodeArea).addClass('d-none');
+    areaScanButton.removeClass('d-none');
     $(elQrCodeVideo).addClass('d-none');
     progressBar.css('width', '0%');
   }
@@ -397,7 +399,7 @@ function prepareControls() {
     if (preventDoubleClick)
       return;
     preventDoubleClick = true;
-    $(qrCodeArea).removeClass('bg-black');
+    areaScanButton.addClass('d-none');
     settingsArea.addClass('d-none');
     btnSettings.removeClass('bg-primary');
     whatTheArea.addClass('d-none');
@@ -413,9 +415,11 @@ function prepareControls() {
       inpCurrentPassword.addClass('bg-danger');
       setTimeout(function () {
         inpCurrentPassword.removeClass('bg-danger');
+        preventDoubleClick = false;
       }, 150);
       return;
     }
+    $(qrCodeArea).removeClass('bg-black');
     if (isQrCodeScannedFlag === 1)
       return;
     if (isQrCodeScannedFlag === 2) {
@@ -433,6 +437,7 @@ function prepareControls() {
       btnShowQrCode.find('svg').attr('fill', 'gray');
       labelOTPcode.removeClass('d-none');
       TOTP6.generateSecretKey(selectedHSD.publicKey + pass, refreshOtp);
+      preventDoubleClick = false;
     } else
       stopShowQRcode();
   }
@@ -726,6 +731,7 @@ function prepareControls() {
     //lblQrShow.addClass('d-none');
     if (!scanner)
       initScanner();
+    areaScanButton.addClass('d-none');
     settingsArea.addClass('d-none');
     btnSettings.removeClass('bg-primary');
     whatTheArea.addClass('d-none');
@@ -863,6 +869,7 @@ function prepareControls() {
     var isHidden = !tgtEl.hasClass('d-none');
     the[ isHidden ? 'removeClass' : 'addClass' ]('bg-primary');
     tgtEl[ isHidden ? 'addClass' : 'removeClass' ]('d-none');
+    areaScanButton[ isHidden ? 'removeClass' : 'addClass' ]('d-none');
     //cardArea[ !isHidden ? 'addClass' : 'removeClass' ]('d-none');
   }
   btnSettings.click(showHideArea);
