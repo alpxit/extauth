@@ -37,9 +37,6 @@
       position: relative;
       top: -0.9em;
     }
-    .p-dst {
-      margin-left: 2.6em !important;
-    }
     #qrCodePositionBtns label {
       font-size: x-small;
       padding: 0.2em 0.7em !important;
@@ -551,6 +548,42 @@
             </div>
           </div>
         </div>
+        <div class="carousel-item">
+          <div class="card">
+            <div class="card-body m-0 p-2 pt-1" style="font-size: 0.7em">
+              <h6 class="accordion-button text-light" style="padding-left: 0 !important;">
+                Some Hints and Tips
+              </h6>
+              <hr class="m-0 p-0 mt-2 mb-2">
+              <small>Follow steps below (expand item for details):</small><br>
+
+              <div class="accordion accordion-flush" id="accordionHinsMode">
+
+                <div class="accordion-item" id="android-pwa-instruction">
+                  <h6 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#qr-collapseAndroid" aria-expanded="false" aria-controls="qr-collapseAndroid">
+                      ⚙️ To hide "Tap to copy URL" notifications...
+                    </button>
+                  </h6>
+                  <div id="qr-collapseAndroid" class="accordion-collapse collapse" data-bs-parent="#accordionHinsMode">
+                    <div class="accordion-body">
+                      <p class="mb-2">This is a standard system notification from Android. If it bothers you every time you launch the app, you can easily disable it:</p>
+                      <ol class="ps-3 mb-2">
+                        <li class="mb-1"><strong>Long-press</strong> the notification in your phone's status bar when it appears.</li>
+                        <li class="mb-1">Tap the <strong>Settings</strong> gear icon.</li>
+                        <li class="mb-1">Turn off the <strong>"Display fullscreen"</strong> (or <em>"Running web apps"</em>) toggle.</li>
+                      </ol>
+                      <div class="text-info pt-1">
+                        ℹ️ This is safe and will not block important push notifications from other apps.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
       <div class="position-absolute top-0 end-0 d-flex m-2" style="z-index: 10;">
         <button class="carousel-control-prev position-static w-auto btn btn-sm btn-outline-light rounded-start me-1"

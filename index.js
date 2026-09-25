@@ -1022,6 +1022,9 @@ function prepareControls() {
     }
   });
 
+  const isAndroid = /Android/i.test(navigator.userAgent);
+  //$('#android-pwa-instruction')[isAndroid ? 'addClass' : 'removeClass']('d-none');
+
 }
 
 $(document).ready(prepareControls);
