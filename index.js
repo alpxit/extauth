@@ -996,6 +996,9 @@ function prepareControls() {
         });*/
   });
   let labelVersion = $('#labelVersion');
+  labelVersion.click(function () {
+    window.open('https://github.com/extauth/extauth.github.io', '_blank', 'noopener,noreferrer');
+  });
   let btnUpdateVersion = $('#btnUpdateVersion');
   caches.keys().then(async function (cacheNames) {
     labelVersion.html(cacheNames[0]);
