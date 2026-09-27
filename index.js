@@ -1009,8 +1009,8 @@ function prepareControls() {
               labelVersion.addClass('text-warning');
               labelVersion.css('font-size', '0.8em');
               btnUpdateVersion.removeClass('d-none');
-              btnUpdateVersion.click(function () {
-                caches.delete(cacheNames);
+              btnUpdateVersion.click(async function () {
+                await caches.delete(cacheNames);
                 location.reload(true);
               });
             }
@@ -1025,6 +1025,11 @@ function prepareControls() {
   const isAndroid = /Android/i.test(navigator.userAgent);
   //$('#android-pwa-instruction')[isAndroid ? 'addClass' : 'removeClass']('d-none');
 
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js')
+        //.then(registration => console.log('Service Worker Registered', registration))
+        .catch(error => console.error('Service Worker Registration Failed', error));
+  }
 }
 
 $(document).ready(prepareControls);

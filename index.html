@@ -2,20 +2,30 @@
 <html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
   <meta name="viewport" content="width=320">
+  <meta http-equiv="Content-Security-Policy" content="
+    default-src 'self';
+    script-src 'self';
+    style-src 'self' 'unsafe-inline';
+    img-src 'self' data:;
+    connect-src 'self' http://10.0.0.0:* http://127.0.0.1:*;
+    object-src 'none';
+    base-uri 'self';
+    form-action 'none';
+  ">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
   <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)">
   <meta charset="UTF-8">
   <title>External Authentication</title>
   <link rel="icon" href="./favicon.svg" type="image/svg+xml">
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="frw/bootstrap.min.css">
-  <script src="frw/jquery.min.js"></script>
-  <script src="frw/bootstrap.bundle.min.js"></script>
-  <script src="frw/age.min.js"></script>
-  <script src="frw/qrcode.min.js"></script>
-  <script src="frw/qr-scanner.legacy.min.js"></script>
-  <script src="frw/totp.js"></script>
-  <script src="index.js"></script>
+  <link rel="stylesheet" href="frw/bootstrap.min.css" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB">
+  <script src="frw/jquery.min.js" integrity="sha384-tcspKDb5tWvyRCOWzevlAeQgHeEzYdUHJpcgnIhcP9w4CnfD7DLAcS+k9QzLbRJO"></script>
+  <script src="frw/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"></script>
+  <script src="frw/age.min.js" integrity="sha384-kdJF1RVsC/h7U24FF0y/5HvuxVL2ZDZ8nyL+L6N3r2YcEf9ZROGKYVslqFX91Qqe"></script>
+  <script src="frw/qrcode.min.js" integrity="sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU"></script>
+  <script src="frw/qr-scanner.legacy.min.js" integrity="sha384-JRzLfCAErQzlGHhAJsG4MMkrA7uwNJ2RvBAYbXTXzzVGoEDBQeiXCOeJveNvY2HQ"></script>
+  <script src="frw/totp.js" integrity="sha384-PDBSXz9u4/G0Z6KDEfJYffrNoXPWHpy0Vjb8FOHqODHAwPJ+wih4lUcX0Gx374v+"></script>
+  <script src="index.js" integrity="sha384-AYRqI3fATyLQkVA8kLe5ibwhbgky7/+dAEolB5ICpEcev4XbjqOiEGKhuBfHd+O/"></script>
   <style>
     html {
       display: flex;
@@ -179,13 +189,6 @@
       width: 1.6em !important;
     }
   </style>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('./sw.js')
-        //.then(registration => console.log('Service Worker Registered', registration))
-        .catch(error => console.error('Service Worker Registration Failed', error));
-    }
-  </script>
 </head>
 <body data-bs-theme="dark">
 <div id="mainContainer" class="container m-0 p-1 pb-0">
