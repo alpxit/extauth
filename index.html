@@ -25,7 +25,7 @@
   <script src="frw/qrcode.min.js" integrity="sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU"></script>
   <script src="frw/qr-scanner.legacy.min.js" integrity="sha384-JRzLfCAErQzlGHhAJsG4MMkrA7uwNJ2RvBAYbXTXzzVGoEDBQeiXCOeJveNvY2HQ"></script>
   <script src="frw/totp.js" integrity="sha384-PDBSXz9u4/G0Z6KDEfJYffrNoXPWHpy0Vjb8FOHqODHAwPJ+wih4lUcX0Gx374v+"></script>
-  <script src="index.js" integrity="sha384-AYRqI3fATyLQkVA8kLe5ibwhbgky7/+dAEolB5ICpEcev4XbjqOiEGKhuBfHd+O/"></script>
+  <script src="index.js" integrity="sha384-4DNvyVWH/p7qqW3ZS0BepubUgXyB5ahcTZJP/l5GTHZ+emghKjF5c2/vDAxTxgVf"></script>
   <style>
     html {
       display: flex;
@@ -37,7 +37,7 @@
       transform-origin: top center;
     }
     .bg-success-highlight {background-color: rgb(0, 255, 0, 0.35);}
-    .text-success-highlight {color: #00ff00;}
+    .text-success-highlight {color: #00ff00 !important;}
     .card label {font-size: 0.7em !important; position: relative; top: -0.3em !important}
     .input-group {height: 1.42em !important; width: auto !important; margin-top: -0.4em !important;}
     .input-group input {height: 1.97em !important; font-size: 0.7em !important; padding: 0 0.4em !important; border-color: #6c757d;}
@@ -99,7 +99,7 @@
       top: 0.02em;
     }
     #btnUpdateVersion {
-      font-size: 1.2em;
+      font-size: 1.4em;
       line-height: 0.4em;
       padding: 0.2em 0 0.36em 0 !important;
       margin-left: 0.1em !important;
@@ -107,6 +107,7 @@
     #btnUpdateVersion span {
       padding-left: 0.1em;
       position: relative;
+      top: 0.1em;
     }
     #btnSettings {
       font-size: 1em;
@@ -144,8 +145,8 @@
       position: relative;
       color: red;
       font-size: small;
-      margin-left: 1em;
-      top: -0.2em;
+      margin-left: 0.2em !important;
+      top: -0.4em;
       background-color: black !important;
       box-shadow: 0 0 1em 0.5em black;
     }
@@ -226,7 +227,10 @@
       <label for="inpKeyDestination" class="form-label m-0 p-0">
         &nbsp;Destination (obtain from a scanned QR code)
       </label>
-      <span id="lbl3ClickDeleteDestination" class="d-none" style="margin-left: 0 !important;">click 1/3</span>
+      <button id="labelVersion" class="btn btn-outline m-0 p-0 position-absolute float-end"
+              style="font-size: 0.6em !important; color: gray; right: 0.7em !important;">v.?.?.?</button>
+
+      <span id="lbl3ClickDeleteDestination" class="d-none">&nbsp; &nbsp; click 1/3 &nbsp; &nbsp;</span>
       <br>
       <div class="input-group input-group-sm" role="group" >
         <input id="inpKeyDestination" type="text" class="form-control" name="username" autocomplete="username"
@@ -712,16 +716,13 @@
     </div>
     <a id="btnUsbModemSettings" class="btn btn-sm btn-outline-secondary mt-0 p-0"
        href="intent:#Intent;action=android.settings.SETTINGS;end">set USB<br>modem</a>
-    <button id="btnShowHelp" class="btn p-0 m-0 btn-outline" type="button" data-bs-target="#whatTheArea"
-            style="font-size: 1.2em; opacity: 0.9; filter: grayscale(100%); position: relative; top: -0.14em; height: 1.4em">&#128214;</button>
-
-    <button id="btnUpdateVersion" type="button" class="btn btn-outline-secondary text-warning fw-bold float-end d-none"><span>&#10227;</span></button>
-    <button id="labelVersion" class="btn btn-outline m-0 p-0 position-relative float-end"
-            style="font-size: 0.6em !important; color: gray">v.?.?.?</button>
+    <button id="btnUpdateVersion" type="button" class="btn btn-outline-secondary me-2 text-warning fw-bold float-end d-none"><span>&#10227;</span></button>
+    <button id="btnShowHelp" class="btn p-0 m-0 me-1 btn-outline float-end" type="button" data-bs-target="#whatTheArea"
+            style="font-size: 1.4em; opacity: 0.9; filter: grayscale(100%); position: relative; top: -0.28em; height: 1.4em">&#128214;</button>
   </div>
 
 <div id="areaScanButton" class="container position-relative">
-  <div class="card border-0">
+  <div class="card border-0 w-100">
     <div class="card-body p-5 mt-4">
       <button id="btnScanSessionPubkey" type="button" class="btn btn-outline bg-dark p-0 position-absolute top-50 start-50 translate-middle">
         <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="currentColor" class="bi float-start" viewBox="0 0 16 16">

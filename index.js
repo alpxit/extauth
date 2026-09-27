@@ -1008,7 +1008,29 @@ function prepareControls() {
             if (vers !== cacheNames[0]) {
               labelVersion.addClass('text-warning');
               labelVersion.css('font-size', '0.8em');
+              labelVersion.css('top', '-0.2em');
               btnUpdateVersion.removeClass('d-none');
+              setInterval(function () {
+                if (labelVersion.text() === cacheNames[0]) {
+                  labelVersion.removeClass('text-warning');
+                  labelVersion.addClass('text-success-highlight');
+                  labelVersion.html(vers);
+                  btnUpdateVersion.addClass('bg-success-highlight');
+                  setTimeout(function () {
+                    btnUpdateVersion.removeClass('bg-success-highlight');
+                    setTimeout(function () {
+                      btnUpdateVersion.addClass('bg-success-highlight');
+                      setTimeout(function () {
+                        btnUpdateVersion.removeClass('bg-success-highlight');
+                      }, 50);
+                    }, 200);
+                  }, 50);
+                } else {
+                  labelVersion.removeClass('text-success-highlight');
+                  labelVersion.addClass('text-warning');
+                  labelVersion.html(cacheNames[0]);
+                }
+              }, 2000);
               btnUpdateVersion.click(async function () {
                 await caches.delete(cacheNames);
                 location.reload(true);
