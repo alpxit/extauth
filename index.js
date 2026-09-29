@@ -1057,16 +1057,16 @@ function prepareControls() {
         console.log(err);
       }
     }
+  }).finally(function () {
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('./sw.js')
+          //.then(registration => console.log('Service Worker Registered', registration))
+          .catch(error => console.error('Service Worker Registration Failed', error));
+    }
   });
 
   const isAndroid = /Android/i.test(navigator.userAgent);
   //$('#android-pwa-instruction')[isAndroid ? 'addClass' : 'removeClass']('d-none');
-
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('./sw.js')
-        //.then(registration => console.log('Service Worker Registered', registration))
-        .catch(error => console.error('Service Worker Registration Failed', error));
-  }
 }
 
 $(document).ready(prepareControls);
