@@ -963,6 +963,18 @@ function prepareControls() {
       await navigator.clipboard.writeText(inpCurrentPassword.val());
     } catch (err) {console.error(err);}
   });
+  let switcherOptionsShow = $('#switcherOptionsShow');
+  switcherOptionsShow.click(function () {
+    let doHidden = switcherOptionsShow[0].checked;
+    $('#toolContainer .behidden')[!doHidden ? 'addClass' : 'removeClass']('d-none');
+    $('#lblSwitcherOptions')[doHidden ? 'addClass' : 'removeClass']('d-none');
+    $('#switcherOptionsShow')[doHidden ? 'addClass' : 'removeClass']('bg-success border-success-subtle');
+    localStorage[doHidden ? 'removeItem' : 'setItem']('switcherOptionsShow', doHidden);
+    labelVersion.focus();
+  });
+  if (localStorage['switcherOptionsShow'])
+    switcherOptionsShow.click();
+
 
   //setQrCodePosition(null, localStorage['QrCodePosition']);
   $('#qrCodePositionBtns input').click(function () {
