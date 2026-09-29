@@ -30,6 +30,7 @@ function prepareControls() {
 
   let cardArea = $('#cardArea');
   let areaScanButton = $('#areaScanButton');
+  let labelVersion = $('#labelVersion');
   let labelOTPcode = $('#labelOTPcode');
   let inpCurrentPassword = $('#inpCurrentPassword');
   let btnCopyFromClipboard = $('#btnCopyFromClipboard');
@@ -1007,7 +1008,6 @@ function prepareControls() {
           //device.addEventListener('gattserverdisconnected', onDisconnected);
         });*/
   });
-  let labelVersion = $('#labelVersion');
   labelVersion.click(function () {
     window.open('https://github.com/extauth/extauth.github.io', '_blank', 'noopener,noreferrer');
   });
