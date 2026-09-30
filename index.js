@@ -982,8 +982,7 @@ function prepareControls() {
     let tgt = $(this).attr('data-bs-target');
     let cssobj = {position: tgt === 'D' ? 'relative' : 'fixed'}
     cssobj['transform'] = (tgt === 'M') ? 'translateY(-50%)' : 'none';
-    cssobj['top'] = (tgt === 'M') ? '50%' : 'unset';
-    cssobj['top'] = (tgt === 'T') ? 0 : 'unset';
+    cssobj['top'] = (tgt === 'M') ? '50%' : ((tgt === 'T') ? 0 : 'unset');
     cssobj['bottom'] = (tgt === 'B') ? 0 : 'unset';
     $(qrCodeArea).css(cssobj);
     localStorage['QrCodePosition'] = tgt;
