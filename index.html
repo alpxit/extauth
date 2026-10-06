@@ -25,7 +25,7 @@
   <script src="frw/qrcode.min.js" integrity="sha384-3zSEDfvllQohrq0PHL1fOXJuC/jSOO34H46t6UQfobFOmxE5BpjjaIJY5F2/bMnU"></script>
   <script src="frw/qr-scanner.legacy.min.js" integrity="sha384-JRzLfCAErQzlGHhAJsG4MMkrA7uwNJ2RvBAYbXTXzzVGoEDBQeiXCOeJveNvY2HQ"></script>
   <script src="frw/totp.js" integrity="sha384-PDBSXz9u4/G0Z6KDEfJYffrNoXPWHpy0Vjb8FOHqODHAwPJ+wih4lUcX0Gx374v+"></script>
-  <script src="index.js" integrity="sha384-6s/pi4RHe3dG70zz1PkIwH+lSPN6WQwZ/cUiGV+OngvlDO4sMyDLreGfOWQaplkk"></script>
+  <script src="index.js" integrity="sha384-Kla8Vw12RJrM0HAKvnYx4vy4C2nRZ3HToBrPKHOtKqvbR/DzOiQm5+wIn9r78c9A"></script>
   <style>
     html {
       display: flex;
@@ -223,7 +223,7 @@
       <div class="input-group input-group-sm">
         <input id="inpFileDataPassword" type="password" class="form-control" name="password" autocomplete="current-password"
                placeholder="leave empty to not decrypt/encrypt the file data"/>
-        <button class="btn btn-outline-secondary" id="btnShowSaveFilePassword" data-bs-target="#inpFileDataPassword">&#x1F441;</button>
+        <button class="btn btn-outline-secondary" id="btnShowSaveFilePassword" data-bs-target="#inpFileDataPassword">&#128065;</button>
       </div>
       <button id="btnOpenFile" class="btn btn-outline-danger mt-2">&#128228;&nbsp; Open</button>
       <button id="btnSaveFile" class="btn btn-outline-success mt-2">Save &nbsp;&#128229;</button>
@@ -273,7 +273,7 @@
         <button class="btn btn-outline-secondary text-success-highlight bg-black d-none" id="labelOTPcode" data-bs-target="#inpCurrentPassword"></button>
         <button class="btn btn-outline-secondary d-none" id="btnClearPassword">&#10060;</button>
         <button class="btn btn-outline-secondary d-none" id="btnRevertPreviousPassword"><span>&#8634;</span></button>
-        <button class="btn btn-outline-secondary" id="btnShowCurrentPassword" data-bs-target="#inpCurrentPassword">&#x1F441;</button>
+        <button class="btn btn-outline-secondary" id="btnShowCurrentPassword" data-bs-target="#inpCurrentPassword">&#128065;</button>
       </div>
       <button id="btnShowQrCode" type="submit" class="btn btn-outline bg-dark m-0 p-0 float-end">
         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="black" class="bi" viewBox="0 0 16 16">
@@ -298,7 +298,7 @@
                placeholder="Enter or generate by dice button"/>
         <button class="btn btn-outline-secondary d-none" id="btnClearNewPassword">&#10060;</button>
         <button class="btn btn-outline-secondary d-none" type="submit" id="btnSaveNewPassword">&nbsp; &#128190; &nbsp;</button>
-        <button class="btn btn-outline-secondary" id="btnShowNewPassword" data-bs-target="#inpNewPassword">&#x1F441;</button>
+        <button class="btn btn-outline-secondary" id="btnShowNewPassword" data-bs-target="#inpNewPassword">&#128065;</button>
       </div>
       </div>
       <button id="btnSettings" class="btn btn-sm btn-outline-secondary m-0 p-0" data-bs-target="#settingsArea"><span>&#128736;</span></button>
@@ -714,9 +714,9 @@
 </div>
 
   <div id="toolContainer" class="m-0 p-1 pt-0" style="padding-top: 0.1em !important; height: 1.8em;">
-    <div class="form-check form-switch mt-1 ms-0 float-start" style="font-size: 0.8em; position: relative; top: -0.2em; padding-left: 1.8em; left: 0.8em; height: 1.2em;">
-      <input class="form-check-input bg-success border-success-subtle" type="checkbox" role="switch" id="switcherOptionsShow" style="width: 1.3em !important;" checked>
-      <label id="lblSwitcherOptions" class="form-check-label ms-0 d-none" style="font-size: 1.8em; position: relative; left: -0.3em; top: -0.4em; filter: grayscale(100%);" for="switcherOptionsShow">&#8997;</label>
+    <div class="form-check form-switch mt-1 ms-0 float-start" style="font-size: 0.8em; position: relative; top: -0.3em; padding-left: 1.8em; left: 0.8em; height: 1.2em; width: 2em;">
+      <input class="form-check-input bg-success border-success-subtle d-none" type="checkbox" role="switch" id="switcherOptionsShow" style="width: 1.3em !important;" checked>
+      <label id="lblSwitcherOptions" class="form-check-label ms-0 opacity-25" style="font-size: 1.6em; position: relative; left: -1.6em; top: -0.3em;" for="switcherOptionsShow">&#8997;</label>
     </div>
     <div class="behidden form-check form-switch mt-1 ms-1 float-start" style="font-size: 0.8em; position: relative; top: -0.2em;">
       <input class="form-check-input" type="checkbox" role="switch" id="switcherAudioMode" disabled>

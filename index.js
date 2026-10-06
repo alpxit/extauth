@@ -977,8 +977,8 @@ function prepareControls() {
   switcherOptionsShow.click(function () {
     let doHidden = switcherOptionsShow[0].checked;
     $('#toolContainer .behidden')[!doHidden ? 'addClass' : 'removeClass']('d-none');
-    $('#lblSwitcherOptions')[doHidden ? 'addClass' : 'removeClass']('d-none');
-    $('#switcherOptionsShow')[doHidden ? 'addClass' : 'removeClass']('bg-success border-success-subtle');
+    switcherOptionsShow[doHidden ? 'addClass' : 'removeClass']('bg-success border-success-subtle');
+    $('#lblSwitcherOptions')[doHidden ? 'addClass' : 'removeClass']('opacity-25');
     localStorage[doHidden ? 'removeItem' : 'setItem']('switcherOptionsShow', doHidden);
     labelVersion.focus();
   });
