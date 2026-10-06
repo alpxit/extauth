@@ -70,16 +70,25 @@ function prepareControls() {
   let isHSDnotEmpty = false;
   if (localStorage[lsHSD]) {
     objHSD = JSON.parse(localStorage[lsHSD]);
-    for (let hst in objHSD)
-      for (let svc in objHSD[hst])
-        for (let dst in objHSD[hst][svc]) {
-          let dest = hst+'/'+svc+'/'+dst;
-          let html = hsdHtmlTemplate.replace('#id', dest.replaceAll('/','_')).replace('#html',dest);
-          if (svc.replace(/luks|crypttab|initramfs/i, '!') === '!')
+    let arrHST = Object.keys(objHSD).sort();
+    for (const ihst in arrHST) {
+      let hst = arrHST[ihst];
+      let arrSVC = Object.keys(objHSD[hst]).sort();
+      for (const isvc in arrSVC) {
+        let svc = arrSVC[isvc];
+        let arrDST = Object.keys(objHSD[hst][svc]).sort();
+        for (const idst in arrDST) {
+          let dst = arrDST[idst];
+          let sdest = (isvc === '0' ? hst + '/' : '<span>'+hst+'/'+'</span>') + svc + '/' + dst;
+          let dest = hst + '/' + svc + '/' + dst;
+          let html = hsdHtmlTemplate.replace('#id', dest.replaceAll('/', '_')).replace('#html', sdest);
+          if (svc.replace(/.*luks.*|.*crypttab.*|.*initramfs.*/i, '!') === '!')
             html = html.replace('text-body', 'text-success-highlight');
           selHSD.append(html);
           isHSDnotEmpty = true;
         }
+      }
+    }
     if (!isHSDnotEmpty)
       localStorage.removeItem(lsHSD);
   } else
@@ -174,7 +183,7 @@ function prepareControls() {
       }
       return;
     }
-    let the = pass ? pass : $(this).html();
+    let the = pass ? pass : $(this).html().replace(/<.?span>/g, '');
     inpKeyDest.val(the);
     let arr = the.split('/');
     let obj = {hostName: arr[0], serviceName: arr[1], destName: arr[2]};
