@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v.1.4.20';
+const CACHE_NAME = 'v.1.4.21';
 const ASSETS = [
   './index.html',
   './manifest.json',
