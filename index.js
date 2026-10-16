@@ -49,6 +49,7 @@ function prepareControls() {
   //let lblScanQrCode = $('#lblScanQrCode');
   let btnShowQrCode = $('#btnShowQrCode');
   let btnKeyDestList = $('#btnKeyDestList');
+  let btnNextLUKsDest = $('#btnNextLUKsDest');
   let selHSD = $('#selHstSrvDst');
   let settingsArea = $('#settingsArea');
   let btnSettings = $('#btnSettings');
@@ -68,6 +69,7 @@ function prepareControls() {
   }
   selHSD.html('');
   let isHSDnotEmpty = false;
+  let luksIDs = [];
   if (localStorage[lsHSD]) {
     objHSD = JSON.parse(localStorage[lsHSD]);
     let arrHST = Object.keys(objHSD).sort();
@@ -82,8 +84,10 @@ function prepareControls() {
           let sdest = (isvc === '0' ? hst + '/' : '<span>'+hst+'/'+'</span>') + svc + '/' + dst;
           let dest = hst + '/' + svc + '/' + dst;
           let html = hsdHtmlTemplate.replace('#id', dest.replaceAll('/', '_')).replace('#html', sdest);
-          if (svc.replace(/.*luks.*|.*crypttab.*|.*initramfs.*/i, '!') === '!')
+          if (svc.replace(/.*luks.*|.*crypttab.*|.*initramfs.*/i, '!') === '!') {
             html = html.replace('text-body', 'text-success-highlight');
+            luksIDs.push(dest.replaceAll('/', '_'));
+          }
           selHSD.append(html);
           isHSDnotEmpty = true;
         }
@@ -217,6 +221,20 @@ function prepareControls() {
     } else
       btnKeyDestList.click();
   }, 250);
+
+  let LUKSdest = {};
+  let lastIDidx = luksIDs.length-1;
+  for (let i=0; i <= lastIDidx; i++) {
+    LUKSdest[luksIDs[i]] = {
+      index: i,
+      prevID: luksIDs[i ? i-1 : lastIDidx],
+      nextID: luksIDs[i===lastIDidx ? 0 : i+1],
+    }
+  }
+  btnNextLUKsDest.click(function () {
+    let selectedDestId = localStorage[lsSelectedHSD];
+    $('#'+LUKSdest[selectedDestId]['nextID']).find('a').click();
+  });
 
   let openSaveFileArea = $('#openSaveFileArea');
   let inpFileDataPassword = $('#inpFileDataPassword');
