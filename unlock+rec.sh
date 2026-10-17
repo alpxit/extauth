@@ -3,6 +3,7 @@
 TS=`date`
 IMGFMT=pgm
 QRCODEPATH=/tmp/qrcode.$IMGFMT
+RECPATH=/mnt/hdd/data/rec
 LOGPATH=/tmp/unlockByQrCode.log
 #LOGPATH="/dev/tty"
 SESSID=`loginctl list-sessions | grep $(whoami) | grep user | awk '{print $1}'`
@@ -21,7 +22,7 @@ ffmpeg -loglevel quiet -hide_banner -y \
  -f alsa -sample_rate 44100 -i hw:CARD=PCH,DEV=0 \
  -map 0:v -map 1:a -f segment -strftime 1 -segment_time 43200 -strict experimental \
  -segment_format mpegts -fflags +genpts+igndts -muxdelay 0.1 -ac 1 -c:a aac -b:a 256k -vf "hqdn3d" -c:v libx264 -crf 26 -preset ultrafast -tune zerolatency -bf 0 -flush_packets 1 \
- /mnt/hdd/data/camcap_%Y-%m-%d_%H-%M-%S.ts \
+ $RECPATH/rec_%Y%m%d_%H%M%S.ts \
  -map 0:v -vf "fps=2,format=gray" -c:v $IMGFMT -f image2pipe - | \
 ffmpeg -loglevel quiet -hide_banner -y \
  -f image2pipe -i - -vf "select='gt(scene,0.10)'" -update 1 -c:v $IMGFMT -f image2 $QRCODEPATH &
@@ -82,17 +83,20 @@ do
   fi
 
   ffplay -autoexit -nodisp -hide_banner "/usr/share/sounds/sound-icons/pisk-down.wav" 2>/dev/null &
-  TS=`date`
+  TS=`date +%Y%m%d_%H%M%S`
 #  echo "$TS Wait until the file received..." >> $LOGPATH
 
   UNLOCKKEY=`zbarimg -q --raw $QRCODEPATH`
-  rm -f $QRCODEPATH
+  ISTGTQR=$RECPATH/md_$TS.pgm
+  mv -f $QRCODEPATH $QRCODEPATH.$TS
+  mv -f $QRCODEPATH.$TS $ISTGTQR
   echo "$TS $UNLOCKKEY" >> $LOGPATH
 
   if [ ! -z "$UNLOCKKEY" ]; then
     THEKEY=`keyctl pipe $TOTPKEYID | oathtool -s 30 -d 6 -b --totp -`
     echo "keys need/recieved: $THEKEY==$UNLOCKKEY" >> $LOGPATH
     if [ "$THEKEY" == "$UNLOCKKEY" ]; then
+      chmod o+x $ISTGTQR
       echo "unlock sessionid $SESSID" >> $LOGPATH
 #      kill -SIGQUIT $ffpid
       loginctl unlock-session $SESSID

@@ -38,14 +38,14 @@ copy_exec /lib/firmware/iwlwifi-7265D-29.ucode.zst
 copy_exec /usr/bin/gphoto2
 copy_exec /usr/bin/zbarcam
 copy_exec /usr/bin/qrencode
-copy_exec /usr/lib/x86_64-linux-gnu/ImageMagick-7.1.2/modules-Q16/coders/bmp.so
-copy_exec /usr/lib/x86_64-linux-gnu/ImageMagick-7.1.2/modules-Q16/coders/bmp.la
-copy_exec /usr/lib/x86_64-linux-gnu/libgphoto2_port/0.12.2/ptpip.so
-copy_exec /usr/lib/x86_64-linux-gnu/libgphoto2_port/0.12.2/usb1.so
-copy_exec /usr/lib/x86_64-linux-gnu/libgphoto2/2.5.33/ptp2.so
+for lib in /usr/lib/x86_64-linux-gnu/libgphoto2_port/*/ptpip.so \
+           /usr/lib/x86_64-linux-gnu/libgphoto2_port/*/usb1.so \
+           /usr/lib/x86_64-linux-gnu/libgphoto2/*/ptp2.so; do
+    [ -e "$lib" ] && copy_exec "$lib"
+done
 copy_exec /usr/bin/age
 copy_exec /usr/bin/age-keygen
 copy_exec /etc/hostname
-copy_exec /usr/local/sbin/cryptkey-from-qrcode   /usr/local/sbin/cryptkey-from-qrcode
+copy_exec /usr/local/sbin/cryptkey-from-qrcode
 
 exit 0
